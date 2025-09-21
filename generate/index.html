@@ -298,7 +298,7 @@
       return;
     }
     
-    const giftLink = `gift.keyninestudios.com?code=${encodeURIComponent(code)}`;
+    const giftLink = `https://gift.keyninestudios.com?code=${encodeURIComponent(code)}`;
     const giftCard = document.querySelector('.gift-card');
     
     navigator.clipboard.writeText(giftLink).then(() => {
