@@ -3,74 +3,309 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gift Card</title>
+<title>Premium Gift Card</title>
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
   body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
-    background-color: #f5f5f5;
-    font-family: sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
   }
+  
+  .container {
+    text-align: center;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
   .gift-card {
     position: relative;
-    width: 400px;
-    height: 250px;
-    background: url('giftcard.png') no-repeat center center;
-    background-size: cover;
+    width: 500px;
+    height: 300px;
+    background: linear-gradient(135deg, #9b59b6 0%, #3498db 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    margin: 20px auto;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .gift-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.4);
+  }
+  
+  .gift-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    z-index: 1;
+  }
+  
+  .card-content {
+    position: relative;
+    z-index: 2;
     text-align: center;
-  }
-  .code {
-    background: rgba(255,255,255,0.8);
-    padding: 10px 20px;
-    margin-top: 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 8px;
-    cursor: default;
-  }
-  button {
-    margin-top: 15px;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    background-color: #4CAF50;
     color: white;
+    width: 100%;
+    padding: 40px;
+  }
+  
+  .title {
+    font-size: 1.2rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    opacity: 0.9;
+  }
+  
+  .main-title {
+    font-size: 4rem;
+    font-weight: 900;
+    letter-spacing: 8px;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    line-height: 0.9;
+  }
+  
+  .subtitle {
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 6px;
+    margin-bottom: 30px;
+    opacity: 0.95;
+  }
+  
+  .code-section {
+    background: rgba(255,255,255,0.95);
+    padding: 15px 30px;
+    border-radius: 12px;
+    margin: 0 auto;
+    max-width: 300px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    backdrop-filter: blur(10px);
+  }
+  
+  .code-label {
+    color: #6c7ce7;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+  
+  .code {
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+  }
+  
+  .buttons {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 25px;
     cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 120px;
+  }
+  
+  .btn-copy {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+  
+  .btn-copy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+  }
+  
+  .footer-text {
+    margin-top: 20px;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.9rem;
+    font-style: italic;
+  }
+  
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    font-weight: 600;
+  }
+  
+  .notification.show {
+    transform: translateX(0);
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  .pulse {
+    animation: pulse 0.3s ease-in-out;
+  }
+  
+  @media (max-width: 600px) {
+    .gift-card {
+      width: 90vw;
+      height: 280px;
+    }
+    
+    .main-title {
+      font-size: 3rem;
+      letter-spacing: 4px;
+    }
+    
+    .subtitle {
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+    }
+    
+    .card-content {
+      padding: 30px 20px;
+    }
+    
+    .btn {
+      min-width: 150px;
+    }
   }
 </style>
 </head>
 <body>
+<div class="container">
+  <div class="gift-card">
+    <div class="card-content">
+      <div class="title">One Year of</div>
+      <div class="main-title">TOP 10!</div>
+      <div class="subtitle">PREMIUM</div>
+      
+      <div class="code-section">
+        <div class="code-label">Gift Code</div>
+        <div class="code" id="code">LOADING...</div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="buttons">
+    <button class="btn btn-copy" onclick="copyCode()">📋 Copy Code</button>
+  </div>
+  
+  <div class="footer-text">
+    Your premium access awaits! ✨
+  </div>
+</div>
 
-<div class="gift-card">
-  <div class="code" id="code">CODE12345</div>
-  <button onclick="copyCode()">Copy Code</button>
+<div class="notification" id="notification">
+  Code copied successfully! 🎉
 </div>
 
 <script>
-  // Grab code from URL
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get('code');
-  if(code) {
+  // Generate a random gift code
+  function generateRandomCode() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let result = '';
+    for (let i = 0; i < 8; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+
+  // Initialize with URL parameter or show placeholder
+  function initCode() {
+    const params = new URLSearchParams(window.location.search);
+    const urlCode = params.get('code');
+    const code = urlCode || 'NO-CODE';
     document.getElementById('code').textContent = code;
   }
 
+  // Copy code to clipboard with animation
   function copyCode() {
-    const codeText = document.getElementById('code').textContent;
+    const codeElement = document.getElementById('code');
+    const codeText = codeElement.textContent;
+    const giftCard = document.querySelector('.gift-card');
+    
     navigator.clipboard.writeText(codeText).then(() => {
-      alert('Code copied: ' + codeText);
+      // Show notification
+      const notification = document.getElementById('notification');
+      notification.textContent = `Code copied: ${codeText} 🎉`;
+      notification.classList.add('show');
+      
+      // Add pulse animation to card
+      giftCard.classList.add('pulse');
+      
+      // Hide notification after 3 seconds
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+      
+      // Remove pulse animation
+      setTimeout(() => {
+        giftCard.classList.remove('pulse');
+      }, 300);
+    }).catch(() => {
+      alert('Failed to copy code. Please copy manually: ' + codeText);
     });
   }
-</script>
 
+
+
+  // Initialize when page loads
+  document.addEventListener('DOMContentLoaded', initCode);
+</script>
 </body>
 </html>
