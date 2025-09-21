@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gift Card</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    font-family: sans-serif;
+  }
+  .gift-card {
+    position: relative;
+    width: 400px;
+    height: 250px;
+    background: url('giftcard.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
+  }
+  .code {
+    background: rgba(255,255,255,0.8);
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: default;
+  }
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="gift-card">
+  <div class="code" id="code">CODE12345</div>
+  <button onclick="copyCode()">Copy Code</button>
+</div>
+
+<script>
+  // Grab code from URL
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
+  if(code) {
+    document.getElementById('code').textContent = code;
+  }
+
+  function copyCode() {
+    const codeText = document.getElementById('code').textContent;
+    navigator.clipboard.writeText(codeText).then(() => {
+      alert('Code copied: ' + codeText);
+    });
+  }
+</script>
+
+</body>
+</html>
